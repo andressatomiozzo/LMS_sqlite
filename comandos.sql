@@ -344,3 +344,14 @@ WHERE "l"."course_id" = 1;
 
 -- total tempo
 SELECT (SUM("seconds") / 60) AS "total_minutos" FROM "lessons" WHERE "course_id" = 1;
+
+--  ===========================================  6 UPDATES  ====================================================
+
+-- atualizar user email
+UPDATE "users" SET "email" = 'renata@email.com', "updated" = CURRENT_TIMESTAMP WHERE "id" = 9;
+
+-- atualizar password
+UPDATE "users" SET "password_hash" = '123456' WHERE "id" = 9;
+
+-- adiciona dias na session
+UPDATE "sessions" SET "expires" = strftime('%s','now','+15 days') WHERE "token" = '3DB6D3D2F80A83E2';
