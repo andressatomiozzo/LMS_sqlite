@@ -313,3 +313,34 @@ BETWEEN "cl"."order" - 1 AND "cl"."order" + 1
 ORDER BY "l"."order";
 
 SELECT * FROM "lesson_nav" WHERE "course_id" = 1 AND "current_slug" = 'conclusao';
+
+--  ===========================================  5 SELECT  ====================================================
+
+-- user por email
+SELECT * FROM "users" WHERE "email" = 'ana@email.com';
+
+-- lessons por course_id
+SELECT * FROM "lessons" WHERE "course_id" = 1 ORDER BY "order";
+
+-- lessons por course_slug
+SELECT * FROM "lessons"
+WHERE "course_id" = (
+  SELECT "id" FROM "courses"
+  WHERE "slug" = 'javascript-completo'
+) ORDER BY "order";
+
+-- free lessons
+SELECT "slug", "title", "course_id" FROM "lessons" WHERE "free" = 1;
+
+-- certificates_full por id -> table view
+SELECT * FROM "certificates_full" WHERE "id" = '29b20031422b25d2';
+
+-- course progress
+SELECT COUNT("l"."title") AS "total", COUNT("lc"."completed") AS "completed"
+FROM "lessons" AS "l"
+LEFT JOIN "lessons_completed" AS "lc"
+ON "lc"."lesson_id" = "l"."id" AND "lc"."user_id" = 1
+WHERE "l"."course_id" = 1;
+
+-- total tempo
+SELECT (SUM("seconds") / 60) AS "total_minutos" FROM "lessons" WHERE "course_id" = 1;
