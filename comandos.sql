@@ -366,3 +366,14 @@ BEGIN
   SET "updated" = CURRENT_TIMESTAMP
   WHERE "id" = NEW."id";
 END;
+
+--  ===========================================  8 DELETE  ====================================================
+
+-- invalidar a session
+DELETE FROM "sessions" WHERE "token" = '3DB6D3D2F80A83E2';
+
+-- deletar usuario (cascades)
+DELETE FROM "users" WHERE "id" = 10;
+
+-- crontab
+DELETE FROM "sessions" WHERE "expires" < strftime('%s','now');
