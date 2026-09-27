@@ -355,3 +355,14 @@ UPDATE "users" SET "password_hash" = '123456' WHERE "id" = 9;
 
 -- adiciona dias na session
 UPDATE "sessions" SET "expires" = strftime('%s','now','+15 days') WHERE "token" = '3DB6D3D2F80A83E2';
+
+--  ===========================================  7 TRIGGER  ====================================================
+
+-- é como se fosse uma automação do update
+CREATE TRIGGER "set_users_updated"
+AFTER UPDATE ON "users"
+BEGIN
+  UPDATE "users"
+  SET "updated" = CURRENT_TIMESTAMP
+  WHERE "id" = NEW."id";
+END;
